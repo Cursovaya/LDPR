@@ -1,0 +1,13 @@
+# Создайте в Render PostgreSQL и привяжите его к сервису (DATABASE_URL подставится автоматически).
+# В Environment добавьте: SECRET_KEY (длинная случайная строка), RENDER уже выставлен платформой.
+services:
+  - type: web
+    name: edo-ldpr
+    runtime: python
+    plan: free
+    rootDir: .
+    buildCommand: pip install -r requirements-server.txt
+    startCommand: gunicorn --bind 0.0.0.0:$PORT --workers 2 --threads 4 edo_ldpr:app_flask
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.3"
